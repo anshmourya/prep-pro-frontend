@@ -1,14 +1,16 @@
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
-
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/landingPage";
+import Dashboard from "./pages/Dashboard";
 const App = () => {
-  const { login, register } = useKindeAuth();
+
   return (
     <>
-      <div className="flex  gap-2 items-center justify-center h-screen">
-        <button onClick={() => login()} className="bg-blue-500 text-white p-2 rounded-md">Login</button>
-        <button onClick={() => register()} className="bg-blue-500 text-white p-2 rounded-md">Register</button>
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </Router>
     </>
   )
 }
