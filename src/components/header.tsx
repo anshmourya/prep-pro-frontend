@@ -18,7 +18,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="flex items-center justify-between px-4 border-b h-14 border-border bg-background">
+    <header className="flex items-center justify-between px-4 border-b h-14 border-border bg-background mq450:gap-2">
       <div className="flex items-center gap-2">
         <svg
           width="24"
@@ -50,7 +50,7 @@ export default function Header() {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="text-lg font-semibold">Prep Pro</span>
+        <span className="text-lg font-semibold mq450:hidden">Prep Pro</span>
       </div>
 
       <div className="flex items-center w-full max-w-md">

@@ -14,8 +14,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { YouTubeSearchResult } from "@/apis/feed.schema";
+import { format } from "date-fns";
+import Image from "@/components/ui/image";
 
-export default function VideoCard() {
+interface VideoCardProps {
+  video: YouTubeSearchResult;
+}
+export default function VideoCard({ video }: VideoCardProps) {
   return (
     <Card className="w-full max-w-md bg-white shadow-lg">
       <CardHeader className="space-y-2">
@@ -24,8 +30,8 @@ export default function VideoCard() {
             <Globe className="w-4 h-4 text-purple-600" />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900">
-              Productivity Tools for Web Developers
+            <h2 className="text-xl font-bold text-gray-900 line-clamp-2">
+              {video.snippet.title}
             </h2>
           </div>
         </div>
@@ -37,22 +43,16 @@ export default function VideoCard() {
             +3
           </Badge>
         </div>
-        <div className="text-sm text-gray-500">Oct 24, 2024 • 1m read time</div>
+        <div className="text-sm text-gray-500">
+          {format(new Date(video.snippet.publishedAt), "MMM dd, yyyy")}
+        </div>
       </CardHeader>
       <CardContent>
         <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-purple-50">
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-            <h3 className="mb-4 text-2xl font-bold text-gray-900">
-              Productivity Tools for Web Developers
-            </h3>
-            <div className="flex -space-x-2">
-              <div className="w-8 h-8 bg-gray-200 border-2 border-white rounded-full" />
-              <div className="w-8 h-8 bg-gray-300 border-2 border-white rounded-full" />
-            </div>
-            <div className="mt-2 text-sm font-medium text-gray-600">
-              Syn Tax
-            </div>
-          </div>
+          <Image
+            src={video.snippet.thumbnails.high.url}
+            alt={video.snippet.title}
+          />
         </div>
       </CardContent>
       <CardFooter className="flex items-center justify-between pt-4 border-t">

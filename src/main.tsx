@@ -1,15 +1,23 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
 import { KindeProvider } from "@kinde-oss/kinde-auth-react";
-createRoot(document.getElementById('root')!).render(
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <KindeProvider clientId={import.meta.env.VITE_CLIENT_ID}
-      domain={import.meta.env.VITE_DOMAIN}
-      redirectUri={import.meta.env.VITE_REDIRECT_URI}
-      logoutUri={import.meta.env.VITE_LOGOUT_URI}>
-      <App />
-    </KindeProvider>
-  </StrictMode>,
-)
+    <QueryClientProvider client={queryClient}>
+      <KindeProvider
+        clientId={import.meta.env.VITE_CLIENT_ID}
+        domain={import.meta.env.VITE_DOMAIN}
+        redirectUri={import.meta.env.VITE_REDIRECT_URI}
+        logoutUri={import.meta.env.VITE_LOGOUT_URI}
+      >
+        <App />
+      </KindeProvider>
+    </QueryClientProvider>
+  </StrictMode>
+);

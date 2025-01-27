@@ -6,7 +6,9 @@ function PageLayout() {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="container mx-auto mt-10 ">
+        <Outlet />
+      </div>
     </>
   );
 }
