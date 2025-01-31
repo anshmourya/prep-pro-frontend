@@ -1,7 +1,8 @@
 import Axios, { AxiosRequestConfig } from "axios";
-// export const baseUrl = "https://ab.host.levitation.co.in";
-export const baseUrl = "http://localhost:5000";
 import Cookies from "universal-cookie";
+export const baseUrl = "https://pre-pro-backend.onrender.com;
+// export const baseUrl = "http://localhost:5000";
+
 const cookies = new Cookies();
 
 const defaultAxios = Axios.create({

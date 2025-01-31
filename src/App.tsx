@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const App = () => {
   const cookies = new Cookies();
   //store the token everytime it change in the cookie
-  const { getToken } = useKindeAuth();
+  const { getToken, isAuthenticated, user } = useKindeAuth();
   useEffect(() => {
     const fetchToken = async () => {
       if (getToken) {
@@ -23,6 +23,13 @@ const App = () => {
 
     fetchToken();
   }, [getToken]);
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // Make API call to your backend
+      console.log("user", user);
+    }
+  }, [isAuthenticated, user]);
   return (
     <Router>
       <Routes>
