@@ -1,9 +1,8 @@
 import Axios, { AxiosRequestConfig } from "axios";
 import Cookies from "universal-cookie";
-export const baseUrl = "https://pre-pro-backend.onrender.com;
-// export const baseUrl = "http://localhost:5000";
-
 const cookies = new Cookies();
+export const baseUrl = "https://pre-pro-backend.onrender.com";
+// export const baseUrl = "http://localhost:5000";
 
 const defaultAxios = Axios.create({
   baseURL: baseUrl,
