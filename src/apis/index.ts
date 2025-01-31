@@ -1,6 +1,8 @@
 import Axios, { AxiosRequestConfig } from "axios";
 // export const baseUrl = "https://ab.host.levitation.co.in";
 export const baseUrl = "http://localhost:5000";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const defaultAxios = Axios.create({
   baseURL: baseUrl,
@@ -23,7 +25,12 @@ export function apiClient(
   options: AxiosRequestConfig<unknown> = {}
 ) {
   const { data = {}, headers = {}, params = {}, ...rest } = options;
-  //   headers.Authorization = `Bearer ${cookies.get("token")}`;
+  const token = cookies.get("token");
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   return defaultAxios({
     url,
     data,

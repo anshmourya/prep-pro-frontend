@@ -3,7 +3,26 @@ import LandingPage from "./pages/landingPage";
 import Dashboard from "./pages/Dashboard";
 import Feed from "./pages/feed";
 import PageLayout from "./pages/layout";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import Cookies from "universal-cookie";
+import { useEffect } from "react";
 const App = () => {
+  const cookies = new Cookies();
+  //store the token everytime it change in the cookie
+  const { getToken } = useKindeAuth();
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (getToken) {
+        const token = await getToken();
+
+        if (token) {
+          cookies.set("token", token);
+        }
+      }
+    };
+
+    fetchToken();
+  }, [getToken]);
   return (
     <Router>
       <Routes>
