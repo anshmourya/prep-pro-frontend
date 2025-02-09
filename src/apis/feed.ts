@@ -2,9 +2,17 @@ import { apis } from ".";
 import { Feed } from "./feed.schema";
 
 const useFeed = () => {
-  const getFeed = async (): Promise<Feed> => {
+  const getFeed = async ({
+    pageParam,
+  }: {
+    pageParam: string;
+  }): Promise<Feed> => {
     try {
-      const { data } = await apis.get("/dashboard", {});
+      const { data } = await apis.get("/dashboard", {
+        params: {
+          pageToken: pageParam,
+        },
+      });
       return data?.data;
     } catch (error) {
       console.log(error);

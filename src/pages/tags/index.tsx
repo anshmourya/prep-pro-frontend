@@ -3,13 +3,15 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useTags from "@/apis/tags";
 import useFilter from "@/hooks/useFilter";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/header";
 import { useDebouncedCallback } from "use-debounce";
-import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import Tip from "@/components/ui/tip";
 
 const Tags = () => {
+  const navigate = useNavigate();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [tagsToRemove, setTagsToRemove] = useState<string[]>([]);
 
@@ -85,12 +87,15 @@ const Tags = () => {
         <div className="flex items-center justify-between mb-16">
           <Logo />
 
-          <button
-            className="px-4 py-2 text-sm font-medium text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!associatedTags || associatedTags.length <= 5}
-          >
-            Continue
-          </button>
+          <Tip content="need at least 5 tags to continue">
+            <button
+              className="px-4 py-2 text-sm font-medium text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!associatedTags || associatedTags.length <= 5}
+              onClick={() => navigate("/feed")}
+            >
+              Continue
+            </button>
+          </Tip>
         </div>
 
         {/* Main Content */}

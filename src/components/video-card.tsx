@@ -1,18 +1,6 @@
-import {
-  Globe,
-  ThumbsUp,
-  ThumbsDown,
-  MessageSquare,
-  Bookmark,
-  Link2,
-} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Globe } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+
 import { Badge } from "@/components/ui/badge";
 import { YouTubeSearchResult } from "@/apis/feed.schema";
 import { format } from "date-fns";
@@ -55,7 +43,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           />
         </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-between pt-4 border-t">
+      {/* <CardFooter className="flex items-center justify-between pt-4 border-t">
         <div className="flex items-center gap-1">
           <Button variant="ghost" size="sm" className="text-gray-600">
             <ThumbsUp className="w-4 h-4" />
@@ -77,7 +65,7 @@ export default function VideoCard({ video }: VideoCardProps) {
             <Link2 className="w-4 h-4" />
           </Button>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }
