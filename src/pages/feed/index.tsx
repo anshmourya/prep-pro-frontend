@@ -6,33 +6,29 @@ import { Navigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { VideoDetailDialog } from "@/components/modal/videoDetail";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 const Feed = () => {
   const { getFeed } = useFeed();
   const { getAssociatedTags } = useTags();
+  const { logout } = useKindeAuth();
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["feed"],
-    queryFn: getFeed,
-    initialPageParam: "",
-    getNextPageParam: (lastPage) => {
-      return lastPage.nextPageToken;
-    },
-  });
-
-  const { ref, inView } = useInView();
   const { data: associatedTags } = useQuery({
     queryKey: ["associatedTags"],
     queryFn: () => getAssociatedTags(),
   });
+  const { data, isLoading, isError, error, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["feed"],
+      queryFn: getFeed,
+      initialPageParam: "",
+      getNextPageParam: (lastPage) => {
+        return lastPage.nextPageToken;
+      },
+      enabled: !!associatedTags && associatedTags.length > 0,
+    });
+
+  const { ref, inView } = useInView();
 
   useEffect(() => {
     if (inView) {
@@ -53,6 +49,7 @@ const Feed = () => {
 
   return (
     <>
+      <button onClick={() => logout()}>logout</button>
       <div className="grid w-full grid-cols-5 gap-4 mq450:grid-cols-1 mq825:grid-cols-2 mq1125:grid-cols-3 mq1400:grid-cols-4">
         {data?.pages.map((page) =>
           page.items.map((item) => (
