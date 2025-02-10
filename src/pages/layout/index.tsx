@@ -8,7 +8,15 @@ interface PageLayoutProps {
   className?: string;
 }
 function PageLayout({ isHeader = true, className }: PageLayoutProps) {
-  const { isAuthenticated, user } = useKindeAuth();
+  const { isAuthenticated, user, isLoading } = useKindeAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-10">
+        <div className="w-6 h-6 border-2 border-gray-300 rounded-full animate-spin border-t-blue-600" />
+      </div>
+    );
+  }
 
   if (!isAuthenticated || !user) {
     return <Navigate to="/" />;
