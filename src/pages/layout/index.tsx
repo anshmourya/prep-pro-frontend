@@ -1,12 +1,19 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Header from "../../components/header";
 import { cn } from "@/lib/utils";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 interface PageLayoutProps {
   isHeader?: boolean;
   className?: string;
 }
 function PageLayout({ isHeader = true, className }: PageLayoutProps) {
+  const { isAuthenticated, user } = useKindeAuth();
+
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <>
       {isHeader && <Header />}
