@@ -69,6 +69,8 @@ const App = () => {
 
     handleUserAuth();
   }, [isAuthenticated, user]);
+
+  
   return (
     <Router>
       <Routes>

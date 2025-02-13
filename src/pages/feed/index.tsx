@@ -6,14 +6,14 @@ import { Navigate } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { VideoDetailDialog } from "@/components/modal/videoDetail";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+
 
 const Feed = () => {
   const { getFeed } = useFeed();
   const { getAssociatedTags } = useTags();
-  const { logout } = useKindeAuth();
 
-  const { data: associatedTags } = useQuery({
+
+  const { data: associatedTags, isLoading: isAssociatedTagsLoading } = useQuery({
     queryKey: ["associatedTags"],
     queryFn: () => getAssociatedTags(),
   });
@@ -36,7 +36,7 @@ const Feed = () => {
     }
   }, [inView, fetchNextPage]);
 
-  if (isLoading)
+  if (isLoading || isAssociatedTagsLoading)
     return (
       <div className="flex items-center justify-center h-10">
         <div className="w-6 h-6 border-2 border-gray-300 rounded-full animate-spin border-t-blue-600" />
@@ -49,11 +49,10 @@ const Feed = () => {
 
   return (
     <>
-      <button onClick={() => logout()}>logout</button>
       <div className="grid w-full grid-cols-5 gap-4 mq450:grid-cols-1 mq825:grid-cols-2 mq1125:grid-cols-3 mq1400:grid-cols-4">
         {data?.pages.map((page) =>
           page.items.map((item) => (
-            <VideoDetailDialog key={item.id.videoId}>
+            <VideoDetailDialog key={item.id.videoId} videoId={item.id.videoId}>
               <VideoCard video={item} />
             </VideoDetailDialog>
           ))

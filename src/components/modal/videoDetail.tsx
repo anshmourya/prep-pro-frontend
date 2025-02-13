@@ -1,94 +1,140 @@
-import { useState, useEffect } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from "react"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import ReactPlayer from "react-player/youtube"
 import {
   ArrowBigUp,
-  ArrowBigDown,
-  MessageSquare,
-  Bookmark,
   Link2,
-  CheckCircle2,
-  ChevronDown,
-} from "lucide-react";
+  Globe,
+  Check,
+} from "lucide-react"
+import useFeed from "@/apis/feed"
+import { useQuery } from "@tanstack/react-query"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { formatDuration } from "@/lib/utils"
 
-export function VideoDetailDialog({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+function CopyButton({ videoId }: { videoId: string }) {
+  const [isCopied, setIsCopied] = useState(false)
+
+  const handleCopy = () => {
+    const url = `https://www.youtube.com/watch?v=${videoId}`
+    navigator.clipboard.writeText(url)
+    setIsCopied(true)
+    setTimeout(() => setIsCopied(false), 2000)
+  }
+
+  return (
+    <Button variant="ghost" size="sm" onClick={handleCopy}>
+      {isCopied ? (
+        <Check className="w-4 h-4 mr-1" />
+      ) : (
+        <Link2 className="w-4 h-4 mr-1" />
+      )}
+      {isCopied ? 'Copied' : 'Copy'}
+    </Button>
+  )
+}
+
+export function VideoDetailDialog({ children, videoId }: { children: React.ReactNode, videoId: string }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const { getVideoDetails } = useFeed()
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const { data: videoDetails, isLoading: isVideoDetailsLoading } = useQuery({
+    queryKey: ["videoDetails", videoId],
+    queryFn: () => getVideoDetails({ videoId }),
+    enabled: !!videoId && !!isOpen,
+  })
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   const Content = () => (
-    <div className="w-full max-w-3xl mx-auto text-black max-h-[85vh] overflow-y-auto">
-      {/* Header */}
-      <div className="flex items-start gap-3 p-4 border-b">
+    <div className="w-full max-w-3xl mx-auto text-gray-900 bg-white max-h-[90vh] overflow-y-auto">
+      {/* Community Header */}
+      <div className="flex items-center gap-2 px-4 py-2 border-b">
+        <Globe className="w-5 h-5 text-gray-600" />
+        <span className="text-gray-600">{videoDetails?.snippet.channelTitle}</span>
+      </div>
+
+      {/* Author Header */}
+      <div className="flex items-center gap-3 p-4 border-b">
         <Avatar className="w-12 h-12">
-          <AvatarImage src="/placeholder.svg" />
-          <AvatarFallback>SF</AvatarFallback>
+          <AvatarImage src={videoDetails?.snippet.thumbnails.default.url} />
+          <AvatarFallback>{videoDetails?.snippet.channelTitle.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="flex-1">
-          <div className="flex items-center gap-1">
-            <h2 className="font-semibold">Santiago Fernandez</h2>
-            <CheckCircle2 className="w-4 h-4 text-purple-500" />
-            <span className="text-sm text-muted-foreground">1.1K</span>
-            <Badge
-              variant="secondary"
-              className="text-purple-800 bg-purple-100 hover:bg-purple-200"
-            >
-              Admin
-            </Badge>
-          </div>
-          <div className="text-sm text-black-foreground ">
-            @santifprimary • Dec 15, 2024 • Top reader in Debezium
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="font-semibold">{videoDetails?.snippet.channelTitle}</h2>
           </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="p-4">
-        <h1 className="mb-3 text-xl font-bold">Best design system examples</h1>
+        <h1 className="mb-3 text-xl font-bold">
+          {videoDetails?.snippet.title}
+        </h1>
         <div className="flex items-center gap-2 mb-4">
-          <Badge variant="secondary" className="text-purple-800 bg-purple-100">
-            community
-          </Badge>
-          <span className="text-sm text-muted-foreground">• 16m read time</span>
+          <Avatar className="w-6 h-6">
+            <AvatarImage src={videoDetails?.snippet.thumbnails.default.url} />
+            <AvatarFallback>{videoDetails?.snippet.channelTitle.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <span className="text-sm font-medium">{videoDetails?.snippet.channelTitle}</span>
+          <span className="text-sm text-gray-600">• {videoDetails?.contentDetails.duration && formatDuration(videoDetails.contentDetails.duration)}</span>
         </div>
 
-        <div className="mb-6">
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-bXkwuefjwyXPjqSSa5QGXyC19gm7fg.png"
-            alt="Design System Examples"
-            className="w-full rounded-lg"
-          />
-        </div>
+        {/* Video Section */}
+        {!isPlaying ? (
+          <div className="relative w-full mb-6 overflow-hidden bg-gray-100 rounded-lg aspect-video group">
+            <img
+              src={videoDetails?.snippet.thumbnails.high?.url}
+              alt={videoDetails?.snippet.title}
+              className="absolute inset-0 object-cover w-full h-full transition-transform duration-300 rounded-lg group-hover:scale-105"
+            />
+            {/* Add a subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-2 transition-all duration-300 shadow-lg bg-white/90 hover:bg-white hover:scale-105"
+                onClick={() => setIsPlaying(true)}
+              >
+                <svg className="w-6 h-6 text-red-600 fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Watch on YouTube
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="relative w-full mb-6 aspect-video">
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${videoId}`}
+              width="100%"
+              height="100%"
+              controls
+              playing={true}
+            />
+          </div>
+        )}
 
         <div className="space-y-4">
           <div className="text-sm font-semibold text-purple-600">TLDR</div>
-          <p className="text-muted-foreground">
-            Exploring top design system examples to help build or improve your
-            own, this post covers the essentials like consistency, efficiency,
-            scalability, collaboration, and quality control. Featuring IBM's
-            Carbon, Atlassian's, and Adobe's Spectrum design systems, it offers
-            insights into unique approaches and best practices in design
-            systems.
+          <p className="text-gray-600 whitespace-pre-wrap">
+            {videoDetails?.snippet.description}
           </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="justify-between w-full"
-          >
-            Hide TLDR
-            <ChevronDown className="w-4 h-4" />
-          </Button>
+
         </div>
       </div>
 
@@ -98,48 +144,41 @@ export function VideoDetailDialog({ children }: { children: React.ReactNode }) {
           <Button variant="ghost" size="sm">
             <ArrowBigUp className="w-5 h-5" />
           </Button>
-          <span className="text-sm font-medium">105</span>
-          <Button variant="ghost" size="sm">
-            <ArrowBigDown className="w-5 h-5" />
-          </Button>
+          <span className="text-sm font-medium">{videoDetails?.statistics.likeCount}</span>
         </div>
-        <Button variant="ghost" size="sm">
-          <MessageSquare className="w-4 h-4 mr-1" />
-          Comment
-        </Button>
-        <Button variant="ghost" size="sm">
-          <Bookmark className="w-4 h-4 mr-1" />
-          Bookmark
-        </Button>
-        <Button variant="ghost" size="sm">
-          <Link2 className="w-4 h-4 mr-1" />
-          Copy
-        </Button>
+
+        <CopyButton videoId={videoId} />
       </div>
     </div>
-  );
+  )
 
   if (isMobile) {
     return (
       <>
         <div onClick={() => setIsOpen(true)}>{children}</div>
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerContent className="">
-            <Content />
+          <VisuallyHidden asChild>
+            <DrawerTitle>Video Details</DrawerTitle>
+          </VisuallyHidden>
+          <DrawerContent className="max-h-[90vh] overflow-y-auto">
+            {isVideoDetailsLoading ? <div>Loading...</div> : <Content />}
           </DrawerContent>
         </Drawer>
       </>
-    );
+    )
   }
 
   return (
     <>
       <div onClick={() => setIsOpen(true)}>{children}</div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <Content />
+        <DialogContent className="max-w-3xl p-0">
+          <VisuallyHidden asChild>
+            <DialogTitle>Video Details</DialogTitle>
+          </VisuallyHidden>
+          {isVideoDetailsLoading ? <div>Loading...</div> : <Content />}
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }

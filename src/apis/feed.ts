@@ -1,5 +1,5 @@
 import { apis } from ".";
-import { Feed } from "./feed.schema";
+import { Feed, YouTubeSearchResult, } from "./feed.schema";
 
 const useFeed = () => {
   const getFeed = async ({
@@ -19,7 +19,21 @@ const useFeed = () => {
       throw error;
     }
   };
-  return { getFeed };
+
+  const getVideoDetails = async ({
+    videoId,
+  }: {
+    videoId: string;
+  }): Promise<YouTubeSearchResult> => {
+    const { data } = await apis.get("/dashboard/video-details", {
+      params: {
+        videoId,
+      },
+    });
+    return data?.data?.items[0];
+  };
+
+  return { getFeed, getVideoDetails };
 };
 
 export default useFeed;

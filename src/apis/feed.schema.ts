@@ -5,9 +5,18 @@ export interface YouTubeSearchResult {
     kind: string;
     videoId: string;
   };
+  contentDetails: {
+    duration: string;
+    dimension: string;
+    definition: string;
+    caption: string;
+    licensedContent: boolean;
+    projection: string;
+  };
   snippet: {
     publishedAt: string;
     channelId: string;
+    categoryId: string;
     title: string;
     description: string;
     thumbnails: {
@@ -30,6 +39,12 @@ export interface YouTubeSearchResult {
     channelTitle: string;
     liveBroadcastContent: string;
     publishTime: string;
+  };
+  statistics: {
+    viewCount: string;
+    likeCount: string;
+    commentCount: string;
+    favoriteCount: string;
   };
 }
 
