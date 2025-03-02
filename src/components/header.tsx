@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import { CommandDialog } from "@/components/ui/command";
+// import { useEffect } from "react";
+// import { Input } from "@/components/ui/input";
+// import { Search } from "lucide-react";
+// import { CommandDialog } from "@/components/ui/command";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+  // useEffect(() => {
+  //   const down = (e: KeyboardEvent) => {
+  //     if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+  //       e.preventDefault();
+  //       setOpen((open) => !open);
+  //     }
+  //   };
+  //   document.addEventListener("keydown", down);
+  //   return () => document.removeEventListener("keydown", down);
+  // }, []);
 
   return (
     <header className="flex items-center justify-between px-4 border-b h-14 border-border bg-background mq450:gap-2">
       <Logo />
 
-      <div className="flex items-center w-full max-w-md">
+      {/* <div className="flex items-center w-full max-w-md">
         <div className="relative w-full">
           <button
             onClick={() => setOpen(true)}
@@ -44,9 +44,9 @@ export default function Header() {
             </div>
           </button>
         </div>
-      </div>
+      </div> */}
 
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      {/* <CommandDialog open={open} onOpenChange={setOpen}>
         <div className="flex items-center px-3 border-b">
           <Search className="w-4 h-4 mr-2 opacity-50 shrink-0" />
           <Input
@@ -54,7 +54,7 @@ export default function Header() {
             className="px-0 border-0 h-11 focus-visible:ring-0"
           />
         </div>
-      </CommandDialog>
+      </CommandDialog> */}
     </header>
   );
 }
