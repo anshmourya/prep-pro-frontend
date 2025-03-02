@@ -59,3 +59,42 @@ export interface Feed {
     resultsPerPage: number;
   };
 }
+
+
+export interface VideoSummary {
+  code: number;
+  message: string;
+  data: {
+    videoId: string;
+    videoInfo: {
+      name: string;
+      thumbnailUrl: {
+        hqdefault: string;
+        maxresdefault: string;
+      };
+      embedUrl: string;
+      duration: number;
+      description: string;
+      upload_date: string;
+      genre: string;
+      author: string;
+    };
+    language_code: {
+      code: string;
+      name: string;
+    }[];
+    transcripts: {
+      [language: string]: {
+        custom: TranscriptEntry[];
+        default: TranscriptEntry[];
+        auto: TranscriptEntry[];
+      };
+    };
+  };
+}
+
+interface TranscriptEntry {
+  start: string;
+  end: string;
+  text: string;
+}

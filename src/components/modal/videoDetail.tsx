@@ -14,6 +14,7 @@ import useFeed from "@/apis/feed"
 import { useQuery } from "@tanstack/react-query"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { formatDuration } from "@/lib/utils"
+import { SummaryModal } from "./Sumarry"
 
 function CopyButton({ videoId }: { videoId: string }) {
   const [isCopied, setIsCopied] = useState(false)
@@ -48,6 +49,8 @@ export function VideoDetailDialog({ children, videoId }: { children: React.React
     queryFn: () => getVideoDetails({ videoId }),
     enabled: !!videoId && !!isOpen,
   })
+
+ 
 
   useEffect(() => {
     const checkMobile = () => {
@@ -148,6 +151,11 @@ export function VideoDetailDialog({ children, videoId }: { children: React.React
         </div>
 
         <CopyButton videoId={videoId} />
+        <SummaryModal videoId={videoId}>
+          <Button variant="ghost" size="sm">
+          Generate Summary
+          </Button>
+        </SummaryModal>
       </div>
     </div>
   )

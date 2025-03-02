@@ -1,0 +1,946 @@
+{
+    "code": 100000,
+    "message": "success",
+    "data": {
+        "videoId": "TlHvYWVUZyc",
+        "videoInfo": {
+            "name": "Kubernetes Explained in 6 Minutes | k8s Architecture",
+            "thumbnailUrl": {
+                "hqdefault": "https://i.ytimg.com/vi/TlHvYWVUZyc/hqdefault.jpg",
+                "maxresdefault": "https://i.ytimg.com/vi/TlHvYWVUZyc/maxresdefault.jpg"
+            },
+            "embedUrl": "https://www.youtube.com/embed/TlHvYWVUZyc",
+            "duration": 388,
+            "description": "",
+            "upload_date": "",
+            "genre": "",
+            "author": "ByteByteGo"
+        },
+        "language_code": [
+            {
+                "code": "en-US",
+                "name": "English (United States)"
+            }
+        ],
+        "transcripts": {
+            "en-US": {
+                "custom": [
+                    {
+                        "start": "00:00:08",
+                        "end": "00:00:41",
+                        "text": "What is Kubernetes? Why is it called k8s? What makes it so popular? Let’s take a look. Kubernetes is an open-source  container orchestration platform. It automates the deployment, scaling, and  management of containerized applications. Kubernetes can be traced back to Google's  internal container orchestration system, Borg, which managed the deployment of  thousands of applications within Google. In 2014, Google open-sourced a version of Borg. That is Kubernetes. Why is it called k8s? This is a somewhat nerdy way  of abbreviating long words."
+                    },
+                    {
+                        "start": "00:00:45",
+                        "end": "00:01:18",
+                        "text": "The number 8 in k8s refers to the 8  letters between the first letter “k” and the last letter “s” in the word Kubernetes. Other examples are i18n for  internationalization, and l10n for localization. A Kubernetes cluster is a set of machines, called nodes, that are used to  run containerized applications. There are two core pieces in a Kubernetes cluster. The first is the control plane. It is responsible for managing  the state of the cluster. In production environments,  the control plane usually"
+                    },
+                    {
+                        "start": "00:01:21",
+                        "end": "00:01:51",
+                        "text": "runs on multiple nodes that span  across several data center zones. The second is a set of worker nodes. These nodes run the containerized  application workloads. The containerized applications run in a Pod. Pods are the smallest  deployable units in Kubernetes. A pod hosts one or more containers and provides shared storage and  networking for those containers. Pods are created and managed by  the Kubernetes control plane. They are the basic building  blocks of Kubernetes applications. Now let’s dive a bit deeper  into the control plane."
+                    },
+                    {
+                        "start": "00:01:56",
+                        "end": "00:02:33",
+                        "text": "It consists of a number of core components. They are the API server, etcd,  scheduler, and the controller manager. The API server is the primary interface between  the control plane and the rest of the cluster. It exposes a RESTful API that allows  clients to interact with the control plane and submit requests to manage the cluster. etcd is a distributed key-value store. It stores the cluster's persistent state. It is used by the API server and  other components of the control plane to store and retrieve  information about the cluster."
+                    },
+                    {
+                        "start": "00:02:35",
+                        "end": "00:03:09",
+                        "text": "The scheduler is responsible for scheduling  pods onto the worker nodes in the cluster. It uses information about the resources  required by the pods and the available resources on the worker nodes  to make placement decisions. The controller manager is responsible for running  controllers that manage the state of the cluster. Some examples include the replication controller, which ensures that the desired number  of replicas of a pod are running, and the deployment controller, which manages  the rolling update and rollback of deployments."
+                    },
+                    {
+                        "start": "00:03:12",
+                        "end": "00:03:45",
+                        "text": "Next, let’s dive deeper into the worker nodes. The core components of Kubernetes that  run on the worker nodes include kubelet, container runtime, and kube proxy. The kubelet is a daemon that  runs on each worker node. It is responsible for communicating  with the control plane. It receives instructions from the control  plane about which pods to run on the node, and ensures that the desired  state of the pods is maintained. The container runtime runs the  containers on the worker nodes. It is responsible for pulling the  container images from a registry,"
+                    },
+                    {
+                        "start": "00:03:45",
+                        "end": "00:04:17",
+                        "text": "starting and stopping the containers,  and managing the containers' resources. The kube-proxy is a network proxy  that runs on each worker node. It is responsible for routing  traffic to the correct pods. It also provides load balancing  for the pods and ensures that traffic is distributed evenly across the pods. So when should we use Kubernetes? As with many things in software  engineering, this is all about tradeoffs. Let’s look at the upsides first. Kubernetes is scalable and highly available."
+                    },
+                    {
+                        "start": "00:04:18",
+                        "end": "00:04:53",
+                        "text": "It provides features like self-healing,  automatic rollbacks, and horizontal scaling. It makes it easy to scale our  applications up and down as needed, allowing us to respond to  changes in demand quickly. Kubernetes is portable. It helps us deploy and manage  applications in a consistent and reliable way regardless of  the underlying infrastructure. It runs on-premise, in a public  cloud, or in a hybrid environment. It provides a uniform way to package,  deploy, and manage applications. Now how about the downsides?"
+                    },
+                    {
+                        "start": "00:04:54",
+                        "end": "00:05:30",
+                        "text": "The number one drawback is complexity. Kubernetes is complex to set up and operate. The upfront cost is high, especially for  organizations new to container orchestration. It requires a high level of  expertise and resources to set up and manage a production Kubernetes environment. The second drawback is cost. Kubernetes requires a certain minimum level of resources to run in order to support  all the features we mentioned above. It is likely an overkill for  many smaller organizations. One popular option that strikes a  reasonable balance is to offload"
+                    },
+                    {
+                        "start": "00:05:32",
+                        "end": "00:06:03",
+                        "text": "the management of the control plane  to a managed Kubernetes service. Managed Kubernetes services are  provided by cloud providers. Some popular ones are Amazon EKS, GKE  on Google Cloud, and AKS on Azure. These services allow organizations  to run the Kubernetes applications without having to worry about  the underlying infrastructure. They take care of tasks that require deep  expertise, like setting up and configuring the control plane, scaling the cluster, and  providing ongoing maintenance and support."
+                    },
+                    {
+                        "start": "00:06:06",
+                        "end": "00:06:25",
+                        "text": "This is a reasonable option for a mid-size  organization to test out Kubernetes. For a small organization, YAGNI - You ain’t  gonna need it - is our recommendation. If you would like to learn more about system  design, check out our books and weekly newsletter. Please subscribe if you learn something new. Thank you and we'll see you next time."
+                    }
+                ],
+                "default": [
+                    {
+                        "start": "00:00:08",
+                        "end": "00:00:09",
+                        "text": "What is Kubernetes?"
+                    },
+                    {
+                        "start": "00:00:09",
+                        "end": "00:00:11",
+                        "text": "Why is it called k8s?"
+                    },
+                    {
+                        "start": "00:00:11",
+                        "end": "00:00:13",
+                        "text": "What makes it so popular?"
+                    },
+                    {
+                        "start": "00:00:13",
+                        "end": "00:00:13",
+                        "text": "Let’s take a look."
+                    },
+                    {
+                        "start": "00:00:14",
+                        "end": "00:00:18",
+                        "text": "Kubernetes is an open-source  container orchestration platform."
+                    },
+                    {
+                        "start": "00:00:18",
+                        "end": "00:00:23",
+                        "text": "It automates the deployment, scaling, and  management of containerized applications."
+                    },
+                    {
+                        "start": "00:00:24",
+                        "end": "00:00:28",
+                        "text": "Kubernetes can be traced back to Google's  internal container orchestration system,"
+                    },
+                    {
+                        "start": "00:00:28",
+                        "end": "00:00:33",
+                        "text": "Borg, which managed the deployment of  thousands of applications within Google."
+                    },
+                    {
+                        "start": "00:00:34",
+                        "end": "00:00:37",
+                        "text": "In 2014, Google open-sourced a version of Borg."
+                    },
+                    {
+                        "start": "00:00:37",
+                        "end": "00:00:39",
+                        "text": "That is Kubernetes."
+                    },
+                    {
+                        "start": "00:00:40",
+                        "end": "00:00:41",
+                        "text": "Why is it called k8s?"
+                    },
+                    {
+                        "start": "00:00:41",
+                        "end": "00:00:45",
+                        "text": "This is a somewhat nerdy way  of abbreviating long words."
+                    },
+                    {
+                        "start": "00:00:45",
+                        "end": "00:00:51",
+                        "text": "The number 8 in k8s refers to the 8  letters between the first letter “k”"
+                    },
+                    {
+                        "start": "00:00:51",
+                        "end": "00:00:54",
+                        "text": "and the last letter “s” in the word Kubernetes."
+                    },
+                    {
+                        "start": "00:00:54",
+                        "end": "00:01:01",
+                        "text": "Other examples are i18n for  internationalization, and l10n for localization."
+                    },
+                    {
+                        "start": "00:01:01",
+                        "end": "00:01:04",
+                        "text": "A Kubernetes cluster is a set of machines,"
+                    },
+                    {
+                        "start": "00:01:04",
+                        "end": "00:01:08",
+                        "text": "called nodes, that are used to  run containerized applications."
+                    },
+                    {
+                        "start": "00:01:08",
+                        "end": "00:01:12",
+                        "text": "There are two core pieces in a Kubernetes cluster."
+                    },
+                    {
+                        "start": "00:01:12",
+                        "end": "00:01:14",
+                        "text": "The first is the control plane."
+                    },
+                    {
+                        "start": "00:01:14",
+                        "end": "00:01:17",
+                        "text": "It is responsible for managing  the state of the cluster."
+                    },
+                    {
+                        "start": "00:01:17",
+                        "end": "00:01:21",
+                        "text": "In production environments,  the control plane usually"
+                    },
+                    {
+                        "start": "00:01:21",
+                        "end": "00:01:24",
+                        "text": "runs on multiple nodes that span  across several data center zones."
+                    },
+                    {
+                        "start": "00:01:25",
+                        "end": "00:01:27",
+                        "text": "The second is a set of worker nodes."
+                    },
+                    {
+                        "start": "00:01:27",
+                        "end": "00:01:31",
+                        "text": "These nodes run the containerized  application workloads."
+                    },
+                    {
+                        "start": "00:01:31",
+                        "end": "00:01:34",
+                        "text": "The containerized applications run in a Pod."
+                    },
+                    {
+                        "start": "00:01:34",
+                        "end": "00:01:38",
+                        "text": "Pods are the smallest  deployable units in Kubernetes."
+                    },
+                    {
+                        "start": "00:01:39",
+                        "end": "00:01:41",
+                        "text": "A pod hosts one or more containers"
+                    },
+                    {
+                        "start": "00:01:41",
+                        "end": "00:01:45",
+                        "text": "and provides shared storage and  networking for those containers."
+                    },
+                    {
+                        "start": "00:01:45",
+                        "end": "00:01:49",
+                        "text": "Pods are created and managed by  the Kubernetes control plane."
+                    },
+                    {
+                        "start": "00:01:49",
+                        "end": "00:01:52",
+                        "text": "They are the basic building  blocks of Kubernetes applications."
+                    },
+                    {
+                        "start": "00:01:53",
+                        "end": "00:01:56",
+                        "text": "Now let’s dive a bit deeper  into the control plane."
+                    },
+                    {
+                        "start": "00:01:56",
+                        "end": "00:01:59",
+                        "text": "It consists of a number of core components."
+                    },
+                    {
+                        "start": "00:01:59",
+                        "end": "00:02:06",
+                        "text": "They are the API server, etcd,  scheduler, and the controller manager."
+                    },
+                    {
+                        "start": "00:02:06",
+                        "end": "00:02:12",
+                        "text": "The API server is the primary interface between  the control plane and the rest of the cluster."
+                    },
+                    {
+                        "start": "00:02:12",
+                        "end": "00:02:17",
+                        "text": "It exposes a RESTful API that allows  clients to interact with the control"
+                    },
+                    {
+                        "start": "00:02:17",
+                        "end": "00:02:20",
+                        "text": "plane and submit requests to manage the cluster."
+                    },
+                    {
+                        "start": "00:02:21",
+                        "end": "00:02:24",
+                        "text": "etcd is a distributed key-value store."
+                    },
+                    {
+                        "start": "00:02:24",
+                        "end": "00:02:26",
+                        "text": "It stores the cluster's persistent state."
+                    },
+                    {
+                        "start": "00:02:26",
+                        "end": "00:02:31",
+                        "text": "It is used by the API server and  other components of the control"
+                    },
+                    {
+                        "start": "00:02:31",
+                        "end": "00:02:34",
+                        "text": "plane to store and retrieve  information about the cluster."
+                    },
+                    {
+                        "start": "00:02:35",
+                        "end": "00:02:41",
+                        "text": "The scheduler is responsible for scheduling  pods onto the worker nodes in the cluster."
+                    },
+                    {
+                        "start": "00:02:41",
+                        "end": "00:02:46",
+                        "text": "It uses information about the resources  required by the pods and the available"
+                    },
+                    {
+                        "start": "00:02:46",
+                        "end": "00:02:50",
+                        "text": "resources on the worker nodes  to make placement decisions."
+                    },
+                    {
+                        "start": "00:02:51",
+                        "end": "00:02:57",
+                        "text": "The controller manager is responsible for running  controllers that manage the state of the cluster."
+                    },
+                    {
+                        "start": "00:02:57",
+                        "end": "00:03:00",
+                        "text": "Some examples include the replication controller,"
+                    },
+                    {
+                        "start": "00:03:00",
+                        "end": "00:03:04",
+                        "text": "which ensures that the desired number  of replicas of a pod are running,"
+                    },
+                    {
+                        "start": "00:03:05",
+                        "end": "00:03:11",
+                        "text": "and the deployment controller, which manages  the rolling update and rollback of deployments."
+                    },
+                    {
+                        "start": "00:03:12",
+                        "end": "00:03:14",
+                        "text": "Next, let’s dive deeper into the worker nodes."
+                    },
+                    {
+                        "start": "00:03:14",
+                        "end": "00:03:18",
+                        "text": "The core components of Kubernetes that  run on the worker nodes include kubelet,"
+                    },
+                    {
+                        "start": "00:03:18",
+                        "end": "00:03:21",
+                        "text": "container runtime, and kube proxy."
+                    },
+                    {
+                        "start": "00:03:21",
+                        "end": "00:03:24",
+                        "text": "The kubelet is a daemon that  runs on each worker node."
+                    },
+                    {
+                        "start": "00:03:24",
+                        "end": "00:03:28",
+                        "text": "It is responsible for communicating  with the control plane."
+                    },
+                    {
+                        "start": "00:03:28",
+                        "end": "00:03:33",
+                        "text": "It receives instructions from the control  plane about which pods to run on the node,"
+                    },
+                    {
+                        "start": "00:03:33",
+                        "end": "00:03:36",
+                        "text": "and ensures that the desired  state of the pods is maintained."
+                    },
+                    {
+                        "start": "00:03:37",
+                        "end": "00:03:41",
+                        "text": "The container runtime runs the  containers on the worker nodes."
+                    },
+                    {
+                        "start": "00:03:41",
+                        "end": "00:03:45",
+                        "text": "It is responsible for pulling the  container images from a registry,"
+                    },
+                    {
+                        "start": "00:03:45",
+                        "end": "00:03:50",
+                        "text": "starting and stopping the containers,  and managing the containers' resources."
+                    },
+                    {
+                        "start": "00:03:50",
+                        "end": "00:03:56",
+                        "text": "The kube-proxy is a network proxy  that runs on each worker node."
+                    },
+                    {
+                        "start": "00:03:56",
+                        "end": "00:04:00",
+                        "text": "It is responsible for routing  traffic to the correct pods."
+                    },
+                    {
+                        "start": "00:04:00",
+                        "end": "00:04:03",
+                        "text": "It also provides load balancing  for the pods and ensures that"
+                    },
+                    {
+                        "start": "00:04:03",
+                        "end": "00:04:06",
+                        "text": "traffic is distributed evenly across the pods."
+                    },
+                    {
+                        "start": "00:04:07",
+                        "end": "00:04:09",
+                        "text": "So when should we use Kubernetes?"
+                    },
+                    {
+                        "start": "00:04:09",
+                        "end": "00:04:14",
+                        "text": "As with many things in software  engineering, this is all about tradeoffs."
+                    },
+                    {
+                        "start": "00:04:14",
+                        "end": "00:04:15",
+                        "text": "Let’s look at the upsides first."
+                    },
+                    {
+                        "start": "00:04:16",
+                        "end": "00:04:18",
+                        "text": "Kubernetes is scalable and highly available."
+                    },
+                    {
+                        "start": "00:04:18",
+                        "end": "00:04:25",
+                        "text": "It provides features like self-healing,  automatic rollbacks, and horizontal scaling."
+                    },
+                    {
+                        "start": "00:04:25",
+                        "end": "00:04:28",
+                        "text": "It makes it easy to scale our  applications up and down as needed,"
+                    },
+                    {
+                        "start": "00:04:28",
+                        "end": "00:04:32",
+                        "text": "allowing us to respond to  changes in demand quickly."
+                    },
+                    {
+                        "start": "00:04:33",
+                        "end": "00:04:34",
+                        "text": "Kubernetes is portable."
+                    },
+                    {
+                        "start": "00:04:34",
+                        "end": "00:04:38",
+                        "text": "It helps us deploy and manage  applications in a consistent"
+                    },
+                    {
+                        "start": "00:04:38",
+                        "end": "00:04:42",
+                        "text": "and reliable way regardless of  the underlying infrastructure."
+                    },
+                    {
+                        "start": "00:04:42",
+                        "end": "00:04:47",
+                        "text": "It runs on-premise, in a public  cloud, or in a hybrid environment."
+                    },
+                    {
+                        "start": "00:04:47",
+                        "end": "00:04:51",
+                        "text": "It provides a uniform way to package,  deploy, and manage applications."
+                    },
+                    {
+                        "start": "00:04:52",
+                        "end": "00:04:54",
+                        "text": "Now how about the downsides?"
+                    },
+                    {
+                        "start": "00:04:54",
+                        "end": "00:04:57",
+                        "text": "The number one drawback is complexity."
+                    },
+                    {
+                        "start": "00:04:57",
+                        "end": "00:05:01",
+                        "text": "Kubernetes is complex to set up and operate."
+                    },
+                    {
+                        "start": "00:05:01",
+                        "end": "00:05:06",
+                        "text": "The upfront cost is high, especially for  organizations new to container orchestration."
+                    },
+                    {
+                        "start": "00:05:07",
+                        "end": "00:05:11",
+                        "text": "It requires a high level of  expertise and resources to set"
+                    },
+                    {
+                        "start": "00:05:11",
+                        "end": "00:05:14",
+                        "text": "up and manage a production Kubernetes environment."
+                    },
+                    {
+                        "start": "00:05:15",
+                        "end": "00:05:17",
+                        "text": "The second drawback is cost."
+                    },
+                    {
+                        "start": "00:05:17",
+                        "end": "00:05:20",
+                        "text": "Kubernetes requires a certain minimum level of"
+                    },
+                    {
+                        "start": "00:05:20",
+                        "end": "00:05:24",
+                        "text": "resources to run in order to support  all the features we mentioned above."
+                    },
+                    {
+                        "start": "00:05:24",
+                        "end": "00:05:27",
+                        "text": "It is likely an overkill for  many smaller organizations."
+                    },
+                    {
+                        "start": "00:05:28",
+                        "end": "00:05:32",
+                        "text": "One popular option that strikes a  reasonable balance is to offload"
+                    },
+                    {
+                        "start": "00:05:32",
+                        "end": "00:05:36",
+                        "text": "the management of the control plane  to a managed Kubernetes service."
+                    },
+                    {
+                        "start": "00:05:37",
+                        "end": "00:05:40",
+                        "text": "Managed Kubernetes services are  provided by cloud providers."
+                    },
+                    {
+                        "start": "00:05:40",
+                        "end": "00:05:47",
+                        "text": "Some popular ones are Amazon EKS, GKE  on Google Cloud, and AKS on Azure."
+                    },
+                    {
+                        "start": "00:05:47",
+                        "end": "00:05:51",
+                        "text": "These services allow organizations  to run the Kubernetes applications"
+                    },
+                    {
+                        "start": "00:05:51",
+                        "end": "00:05:54",
+                        "text": "without having to worry about  the underlying infrastructure."
+                    },
+                    {
+                        "start": "00:05:55",
+                        "end": "00:06:00",
+                        "text": "They take care of tasks that require deep  expertise, like setting up and configuring"
+                    },
+                    {
+                        "start": "00:06:00",
+                        "end": "00:06:05",
+                        "text": "the control plane, scaling the cluster, and  providing ongoing maintenance and support."
+                    },
+                    {
+                        "start": "00:06:06",
+                        "end": "00:06:11",
+                        "text": "This is a reasonable option for a mid-size  organization to test out Kubernetes."
+                    },
+                    {
+                        "start": "00:06:12",
+                        "end": "00:06:16",
+                        "text": "For a small organization, YAGNI - You ain’t  gonna need it - is our recommendation."
+                    },
+                    {
+                        "start": "00:06:17",
+                        "end": "00:06:22",
+                        "text": "If you would like to learn more about system  design, check out our books and weekly newsletter."
+                    },
+                    {
+                        "start": "00:06:22",
+                        "end": "00:06:24",
+                        "text": "Please subscribe if you learn something new."
+                    },
+                    {
+                        "start": "00:06:24",
+                        "end": "00:06:27",
+                        "text": "Thank you and we'll see you next time."
+                    }
+                ],
+                "auto": [
+                    {
+                        "start": "00:00:08",
+                        "end": "00:00:09",
+                        "text": "What is Kubernetes?"
+                    },
+                    {
+                        "start": "00:00:09",
+                        "end": "00:00:11",
+                        "text": "Why is it called k8s?"
+                    },
+                    {
+                        "start": "00:00:11",
+                        "end": "00:00:13",
+                        "text": "What makes it so popular?"
+                    },
+                    {
+                        "start": "00:00:13",
+                        "end": "00:00:13",
+                        "text": "Let’s take a look."
+                    },
+                    {
+                        "start": "00:00:14",
+                        "end": "00:00:18",
+                        "text": "Kubernetes is an open-source  container orchestration platform."
+                    },
+                    {
+                        "start": "00:00:18",
+                        "end": "00:00:23",
+                        "text": "It automates the deployment, scaling, and  management of containerized applications."
+                    },
+                    {
+                        "start": "00:00:24",
+                        "end": "00:00:33",
+                        "text": "Kubernetes can be traced back to Google's  internal container orchestration system, Borg, which managed the deployment of  thousands of applications within Google."
+                    },
+                    {
+                        "start": "00:00:34",
+                        "end": "00:00:37",
+                        "text": "In 2014, Google open-sourced a version of Borg."
+                    },
+                    {
+                        "start": "00:00:37",
+                        "end": "00:00:39",
+                        "text": "That is Kubernetes."
+                    },
+                    {
+                        "start": "00:00:40",
+                        "end": "00:00:41",
+                        "text": "Why is it called k8s?"
+                    },
+                    {
+                        "start": "00:00:41",
+                        "end": "00:00:45",
+                        "text": "This is a somewhat nerdy way  of abbreviating long words."
+                    },
+                    {
+                        "start": "00:00:45",
+                        "end": "00:00:54",
+                        "text": "The number 8 in k8s refers to the 8  letters between the first letter “k” and the last letter “s” in the word Kubernetes."
+                    },
+                    {
+                        "start": "00:00:54",
+                        "end": "00:01:01",
+                        "text": "Other examples are i18n for  internationalization, and l10n for localization."
+                    },
+                    {
+                        "start": "00:01:01",
+                        "end": "00:01:08",
+                        "text": "A Kubernetes cluster is a set of machines, called nodes, that are used to  run containerized applications."
+                    },
+                    {
+                        "start": "00:01:08",
+                        "end": "00:01:12",
+                        "text": "There are two core pieces in a Kubernetes cluster."
+                    },
+                    {
+                        "start": "00:01:12",
+                        "end": "00:01:14",
+                        "text": "The first is the control plane."
+                    },
+                    {
+                        "start": "00:01:14",
+                        "end": "00:01:17",
+                        "text": "It is responsible for managing  the state of the cluster."
+                    },
+                    {
+                        "start": "00:01:17",
+                        "end": "00:01:24",
+                        "text": "In production environments,  the control plane usually runs on multiple nodes that span  across several data center zones."
+                    },
+                    {
+                        "start": "00:01:25",
+                        "end": "00:01:27",
+                        "text": "The second is a set of worker nodes."
+                    },
+                    {
+                        "start": "00:01:27",
+                        "end": "00:01:31",
+                        "text": "These nodes run the containerized  application workloads."
+                    },
+                    {
+                        "start": "00:01:31",
+                        "end": "00:01:34",
+                        "text": "The containerized applications run in a Pod."
+                    },
+                    {
+                        "start": "00:01:34",
+                        "end": "00:01:38",
+                        "text": "Pods are the smallest  deployable units in Kubernetes."
+                    },
+                    {
+                        "start": "00:01:39",
+                        "end": "00:01:45",
+                        "text": "A pod hosts one or more containers and provides shared storage and  networking for those containers."
+                    },
+                    {
+                        "start": "00:01:45",
+                        "end": "00:01:49",
+                        "text": "Pods are created and managed by  the Kubernetes control plane."
+                    },
+                    {
+                        "start": "00:01:49",
+                        "end": "00:01:52",
+                        "text": "They are the basic building  blocks of Kubernetes applications."
+                    },
+                    {
+                        "start": "00:01:53",
+                        "end": "00:01:56",
+                        "text": "Now let’s dive a bit deeper  into the control plane."
+                    },
+                    {
+                        "start": "00:01:56",
+                        "end": "00:01:59",
+                        "text": "It consists of a number of core components."
+                    },
+                    {
+                        "start": "00:01:59",
+                        "end": "00:02:06",
+                        "text": "They are the API server, etcd,  scheduler, and the controller manager."
+                    },
+                    {
+                        "start": "00:02:06",
+                        "end": "00:02:12",
+                        "text": "The API server is the primary interface between  the control plane and the rest of the cluster."
+                    },
+                    {
+                        "start": "00:02:12",
+                        "end": "00:02:20",
+                        "text": "It exposes a RESTful API that allows  clients to interact with the control plane and submit requests to manage the cluster."
+                    },
+                    {
+                        "start": "00:02:21",
+                        "end": "00:02:24",
+                        "text": "etcd is a distributed key-value store."
+                    },
+                    {
+                        "start": "00:02:24",
+                        "end": "00:02:26",
+                        "text": "It stores the cluster's persistent state."
+                    },
+                    {
+                        "start": "00:02:26",
+                        "end": "00:02:34",
+                        "text": "It is used by the API server and  other components of the control plane to store and retrieve  information about the cluster."
+                    },
+                    {
+                        "start": "00:02:35",
+                        "end": "00:02:41",
+                        "text": "The scheduler is responsible for scheduling  pods onto the worker nodes in the cluster."
+                    },
+                    {
+                        "start": "00:02:41",
+                        "end": "00:02:50",
+                        "text": "It uses information about the resources  required by the pods and the available resources on the worker nodes  to make placement decisions."
+                    },
+                    {
+                        "start": "00:02:51",
+                        "end": "00:02:57",
+                        "text": "The controller manager is responsible for running  controllers that manage the state of the cluster."
+                    },
+                    {
+                        "start": "00:02:57",
+                        "end": "00:03:10",
+                        "text": "Some examples include the replication controller, which ensures that the desired number  of replicas of a pod are running, and the deployment controller, which manages  the rolling update and rollback of deployments."
+                    },
+                    {
+                        "start": "00:03:12",
+                        "end": "00:03:14",
+                        "text": "Next, let’s dive deeper into the worker nodes."
+                    },
+                    {
+                        "start": "00:03:14",
+                        "end": "00:03:21",
+                        "text": "The core components of Kubernetes that  run on the worker nodes include kubelet, container runtime, and kube proxy."
+                    },
+                    {
+                        "start": "00:03:21",
+                        "end": "00:03:24",
+                        "text": "The kubelet is a daemon that  runs on each worker node."
+                    },
+                    {
+                        "start": "00:03:24",
+                        "end": "00:03:28",
+                        "text": "It is responsible for communicating  with the control plane."
+                    },
+                    {
+                        "start": "00:03:28",
+                        "end": "00:03:36",
+                        "text": "It receives instructions from the control  plane about which pods to run on the node, and ensures that the desired  state of the pods is maintained."
+                    },
+                    {
+                        "start": "00:03:37",
+                        "end": "00:03:41",
+                        "text": "The container runtime runs the  containers on the worker nodes."
+                    },
+                    {
+                        "start": "00:03:41",
+                        "end": "00:03:50",
+                        "text": "It is responsible for pulling the  container images from a registry, starting and stopping the containers,  and managing the containers' resources."
+                    },
+                    {
+                        "start": "00:03:50",
+                        "end": "00:03:56",
+                        "text": "The kube-proxy is a network proxy  that runs on each worker node."
+                    },
+                    {
+                        "start": "00:03:56",
+                        "end": "00:04:00",
+                        "text": "It is responsible for routing  traffic to the correct pods."
+                    },
+                    {
+                        "start": "00:04:00",
+                        "end": "00:04:06",
+                        "text": "It also provides load balancing  for the pods and ensures that traffic is distributed evenly across the pods."
+                    },
+                    {
+                        "start": "00:04:07",
+                        "end": "00:04:09",
+                        "text": "So when should we use Kubernetes?"
+                    },
+                    {
+                        "start": "00:04:09",
+                        "end": "00:04:14",
+                        "text": "As with many things in software  engineering, this is all about tradeoffs."
+                    },
+                    {
+                        "start": "00:04:14",
+                        "end": "00:04:15",
+                        "text": "Let’s look at the upsides first."
+                    },
+                    {
+                        "start": "00:04:16",
+                        "end": "00:04:18",
+                        "text": "Kubernetes is scalable and highly available."
+                    },
+                    {
+                        "start": "00:04:18",
+                        "end": "00:04:25",
+                        "text": "It provides features like self-healing,  automatic rollbacks, and horizontal scaling."
+                    },
+                    {
+                        "start": "00:04:25",
+                        "end": "00:04:32",
+                        "text": "It makes it easy to scale our  applications up and down as needed, allowing us to respond to  changes in demand quickly."
+                    },
+                    {
+                        "start": "00:04:33",
+                        "end": "00:04:34",
+                        "text": "Kubernetes is portable."
+                    },
+                    {
+                        "start": "00:04:34",
+                        "end": "00:04:42",
+                        "text": "It helps us deploy and manage  applications in a consistent and reliable way regardless of  the underlying infrastructure."
+                    },
+                    {
+                        "start": "00:04:42",
+                        "end": "00:04:47",
+                        "text": "It runs on-premise, in a public  cloud, or in a hybrid environment."
+                    },
+                    {
+                        "start": "00:04:47",
+                        "end": "00:04:51",
+                        "text": "It provides a uniform way to package,  deploy, and manage applications."
+                    },
+                    {
+                        "start": "00:04:52",
+                        "end": "00:04:54",
+                        "text": "Now how about the downsides?"
+                    },
+                    {
+                        "start": "00:04:54",
+                        "end": "00:04:57",
+                        "text": "The number one drawback is complexity."
+                    },
+                    {
+                        "start": "00:04:57",
+                        "end": "00:05:01",
+                        "text": "Kubernetes is complex to set up and operate."
+                    },
+                    {
+                        "start": "00:05:01",
+                        "end": "00:05:06",
+                        "text": "The upfront cost is high, especially for  organizations new to container orchestration."
+                    },
+                    {
+                        "start": "00:05:07",
+                        "end": "00:05:14",
+                        "text": "It requires a high level of  expertise and resources to set up and manage a production Kubernetes environment."
+                    },
+                    {
+                        "start": "00:05:15",
+                        "end": "00:05:17",
+                        "text": "The second drawback is cost."
+                    },
+                    {
+                        "start": "00:05:17",
+                        "end": "00:05:24",
+                        "text": "Kubernetes requires a certain minimum level of resources to run in order to support  all the features we mentioned above."
+                    },
+                    {
+                        "start": "00:05:24",
+                        "end": "00:05:27",
+                        "text": "It is likely an overkill for  many smaller organizations."
+                    },
+                    {
+                        "start": "00:05:28",
+                        "end": "00:05:36",
+                        "text": "One popular option that strikes a  reasonable balance is to offload the management of the control plane  to a managed Kubernetes service."
+                    },
+                    {
+                        "start": "00:05:37",
+                        "end": "00:05:40",
+                        "text": "Managed Kubernetes services are  provided by cloud providers."
+                    },
+                    {
+                        "start": "00:05:40",
+                        "end": "00:05:47",
+                        "text": "Some popular ones are Amazon EKS, GKE  on Google Cloud, and AKS on Azure."
+                    },
+                    {
+                        "start": "00:05:47",
+                        "end": "00:05:54",
+                        "text": "These services allow organizations  to run the Kubernetes applications without having to worry about  the underlying infrastructure."
+                    },
+                    {
+                        "start": "00:05:55",
+                        "end": "00:06:05",
+                        "text": "They take care of tasks that require deep  expertise, like setting up and configuring the control plane, scaling the cluster, and  providing ongoing maintenance and support."
+                    },
+                    {
+                        "start": "00:06:06",
+                        "end": "00:06:11",
+                        "text": "This is a reasonable option for a mid-size  organization to test out Kubernetes."
+                    },
+                    {
+                        "start": "00:06:12",
+                        "end": "00:06:16",
+                        "text": "For a small organization, YAGNI - You ain’t  gonna need it - is our recommendation."
+                    },
+                    {
+                        "start": "00:06:17",
+                        "end": "00:06:22",
+                        "text": "If you would like to learn more about system  design, check out our books and weekly newsletter."
+                    },
+                    {
+                        "start": "00:06:22",
+                        "end": "00:06:24",
+                        "text": "Please subscribe if you learn something new."
+                    },
+                    {
+                        "start": "00:06:24",
+                        "end": "00:06:27",
+                        "text": "Thank you and we'll see you next time."
+                    }
+                ]
+            }
+        }
+    }
+}
