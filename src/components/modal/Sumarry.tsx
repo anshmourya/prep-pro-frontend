@@ -30,7 +30,7 @@ export function SummaryModal({children , videoId}: {children: React.ReactNode , 
           <div className="grid gap-4 py-4">
             <h2 className="text-xl font-semibold">{summary?.data?.videoInfo.name}</h2>
             <div className="space-y-4">
-              {summary?.data?.transcripts['en-US'].custom.map((item) => (
+              {summary?.data?.transcripts['en_auto_auto'].custom.map((item) => (
                 <TranscriptItem key={item.start} item={item} />
               ))}
             </div>
@@ -49,7 +49,7 @@ export function SummaryModal({children , videoId}: {children: React.ReactNode , 
         <div className="px-4 py-6 max-h-[80vh] overflow-y-auto">
           <h2 className="mb-4 text-xl font-semibold">Video Transcript</h2>
           <div className="space-y-4">
-            {summary?.data?.transcripts['en-US'].custom.map((item) => (
+            {summary?.data?.transcripts['en_auto_auto'].custom.map((item) => (
               <TranscriptItem key={item.start} item={item}  />
             ))}
           </div>
