@@ -10,7 +10,9 @@ const useTags = () => {
     return data.data;
   };
 
-  const associateUserWithTags = async (tagIds: string[]) => {
+  const associateUserWithTags = async (
+    tagIds: { tagId: string; action: "add" | "remove" }[]
+  ) => {
     const { data } = await apis.post("/tags/associate", {
       data: tagIds,
     });
@@ -21,6 +23,7 @@ const useTags = () => {
     const { data } = await apis.get("/tags/get-associated", {});
     return data.data;
   };
+
   return { getTags, associateUserWithTags, getAssociatedTags };
 };
 

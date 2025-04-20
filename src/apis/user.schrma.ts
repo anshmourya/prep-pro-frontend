@@ -6,7 +6,10 @@ export interface UserSchema {
   createdAt: string;
   updatedAt: string;
   totalStreak: Date[];
-  tags: string[];
+  tags: {
+    name: string;
+    id: string;
+  }[];
 }
 
 export interface checkUserResponse {

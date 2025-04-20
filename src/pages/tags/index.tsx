@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import useTags from "@/apis/tags";
@@ -12,9 +12,12 @@ import Tip from "@/components/ui/tip";
 
 const Tags = () => {
   const navigate = useNavigate();
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [tagsToRemove, setTagsToRemove] = useState<string[]>([]);
-
+  const [selectedTags, setSelectedTags] = useState<
+    {
+      tagId: string;
+      action: "add" | "remove";
+    }[]
+  >([]);
   const { getTags, associateUserWithTags, getAssociatedTags } = useTags();
 
   const { filterOption, setQuery } = useFilter({
@@ -36,35 +39,49 @@ const Tags = () => {
   const queryClient = useQueryClient();
 
   const { mutate: associateUserWithTagsHandler } = useMutation({
-    mutationFn: () => associateUserWithTags([...selectedTags, ...tagsToRemove]),
+    mutationFn: () => associateUserWithTags(selectedTags),
     onSuccess: () => {
-      setTagsToRemove([]);
       setSelectedTags([]);
       refetchAssociatedTags();
     },
   });
 
   const debouncedAssociateUserWithTags = useDebouncedCallback(() => {
-    associateUserWithTagsHandler();
+    if (selectedTags.length > 0) {
+      associateUserWithTagsHandler();
+    }
   }, 1000);
+
   const toggleTag = (tag: string) => {
-    const isTagAlreadySelected = selectedTags.includes(tag);
+    const isTagAlreadySelected = selectedTags.find(
+      (t) => t.tagId === tag && t.action === "add"
+    );
     const isTagAssociated = associatedTags?.includes(tag);
 
     // Optimistically update the UI first
     if (isTagAssociated) {
-      // If tag is already associated, remove it from associatedTags immediately
-      const updatedAssociatedTags =
-        associatedTags?.filter((t) => t !== tag) || [];
-      queryClient.setQueryData(["associatedTags"], updatedAssociatedTags);
-      setTagsToRemove((prev) => [...prev.filter((t) => t !== tag), tag]);
+      // If tag is already associated, mark it for removal
+      queryClient.setQueryData(
+        ["associatedTags"],
+        (associatedTags || []).filter((t) => t !== tag)
+      );
+      setSelectedTags((prev) => {
+        const filtered = prev.filter((t) => t.tagId !== tag);
+        return [...filtered, { tagId: tag, action: "remove" }];
+      });
     } else if (isTagAlreadySelected) {
-      setSelectedTags((prev) => prev.filter((t) => t !== tag));
+      // If tag is in selected tags for addition, remove it from selection
+      setSelectedTags((prev) => prev.filter((t) => t.tagId !== tag));
     } else {
       // If adding a new tag, update both selected and associated immediately
-      setSelectedTags((prev) => [...prev, tag]);
-      const updatedAssociatedTags = [...(associatedTags || []), tag];
-      queryClient.setQueryData(["associatedTags"], updatedAssociatedTags);
+      setSelectedTags((prev) => {
+        const filtered = prev.filter((t) => t.tagId !== tag);
+        return [...filtered, { tagId: tag, action: "add" }];
+      });
+      queryClient.setQueryData(
+        ["associatedTags"],
+        [...(associatedTags || []), tag]
+      );
     }
 
     debouncedAssociateUserWithTags();
@@ -80,6 +97,13 @@ const Tags = () => {
     });
   }, 700);
 
+  useEffect(() => {
+    //find all associated tag
+    const associatedTagIds = tags?.data
+      ?.filter((tag) => associatedTags?.includes(tag._id))
+      .map((tag) => tag.name);
+    console.log(associatedTagIds);
+  }, [associatedTags, tags?.data]);
   return (
     <div className="w-full min-h-screen bg-gradient-to-b from-purple-100 to-white">
       <div className="max-w-screen-lg px-4 pt-8 pb-16 mx-auto">
@@ -90,7 +114,7 @@ const Tags = () => {
           <Tip content="need at least 5 tags to continue">
             <button
               className="px-4 py-2 text-sm font-medium text-white transition-colors bg-purple-600 rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={!associatedTags || associatedTags.length <= 5}
+              disabled={!associatedTags || associatedTags.length < 5}
               onClick={() => navigate("/feed")}
             >
               Continue
@@ -124,15 +148,14 @@ const Tags = () => {
                 className={cn(
                   "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 w-fit",
                   associatedTags?.includes(tag._id) ||
-                    selectedTags.includes(tag._id)
+                    selectedTags.find(
+                      (t) => t.tagId === tag._id && t.action === "add"
+                    )
                     ? "bg-purple-600 text-white"
                     : "bg-white hover:bg-gray-100 text-gray-700 border border-gray-300"
                 )}
               >
                 {tag.name}
-                {/* {featuredTags.includes(tag) && (
-                    <span className="absolute w-2 h-2 bg-purple-500 rounded-full -top-1 -right-1" />
-                  )} */}
               </button>
             ))}
           </div>

@@ -7,15 +7,24 @@ import { useQuery } from "@tanstack/react-query";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { Badge } from "@/components/ui/badge";
 import { calculateStreak } from "@/lib/utils";
+import { useState } from "react";
 
 const Profile = () => {
+  const [isCopied, setIsCopied] = useState(false);
+
   const { getMe } = useUser();
   const { user: kindeUser } = useKindeAuth();
-  const { data: user } = useQuery({
+  const { data } = useQuery({
     queryKey: ["user", "me"],
     queryFn: () => getMe(),
   });
-  const topTags = ["webdev", "ai", "career", "devtools", "productivity"];
+  const user = data?.data?.user;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.origin);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   return (
     <div className="min-h-screen px-4 py-8 dark:bg-gray-900">
@@ -27,16 +36,14 @@ const Profile = () => {
               <Avatar className="w-20 h-20">
                 <AvatarImage src={kindeUser?.picture ?? ""} />
                 <AvatarFallback className="font-medium text-gray-600 capitalize dark:text-gray-400">
-                  {user?.data?.user.name[0]}
+                  {user?.name[0]}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-2xl font-bold">{user?.data?.user.name}</h1>
+                <h1 className="text-2xl font-bold">{user?.name}</h1>
                 <p className="text-gray-600 dark:text-gray-400">
-                  @{user?.data?.user.name} · Joined{" "}
-                  {new Date(
-                    user?.data?.user.createdAt ?? ""
-                  ).toLocaleDateString()}
+                  @{user?.name} · Joined{" "}
+                  {new Date(user?.createdAt ?? "").toLocaleDateString()}
                 </p>
               </div>
             </div>
@@ -59,10 +66,7 @@ const Profile = () => {
             <div className="flex gap-8">
               <div>
                 <div className="text-3xl font-bold">
-                  {
-                    calculateStreak(user?.data?.user.totalStreak ?? [])
-                      .longestStreak
-                  }
+                  {calculateStreak(user?.totalStreak ?? []).longestStreak}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   Longest streak 🏆
@@ -70,7 +74,7 @@ const Profile = () => {
               </div>
               <div>
                 <div className="text-3xl font-bold">
-                  {user?.data?.user.totalStreak.length}
+                  {user?.totalStreak.length}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   Total reading days
@@ -89,13 +93,13 @@ const Profile = () => {
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {topTags.map((tag) => (
+              {user?.tags?.map((tag) => (
                 <Badge
-                  key={tag}
+                  key={tag.id}
                   variant="secondary"
                   className="px-3 py-1 text-sm"
                 >
-                  #{tag}
+                  #{tag.name}
                 </Badge>
               ))}
             </div>
@@ -112,12 +116,12 @@ const Profile = () => {
             <div className="flex items-center gap-2 p-2 rounded-md bg-gray-50 dark:bg-gray-800">
               <input
                 type="text"
-                value="https://dly.to/slPduTArbn3"
+                value={window.location.origin}
                 readOnly
                 className="flex-1 bg-transparent border-none focus:outline-none"
               />
-              <Button variant="outline" size="sm">
-                Copy link
+              <Button variant="outline" size="sm" onClick={handleCopy}>
+                {isCopied ? "Copied" : "Copy link"}
               </Button>
             </div>
             <div className="flex gap-2">
