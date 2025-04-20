@@ -25,7 +25,7 @@ const useUser = () => {
   };
 
   const getMe = async (): Promise<checkUserResponse> => {
-    const response = await apis.get("/user/get/me");
+    const response = await apis.get("/user/get/me", {});
     return response.data;
   };
 
