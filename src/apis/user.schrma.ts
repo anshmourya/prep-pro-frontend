@@ -5,6 +5,7 @@ export interface UserSchema {
   kindeId: string;
   createdAt: string;
   updatedAt: string;
+  totalStreak: Date[];
   tags: string[];
 }
 

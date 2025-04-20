@@ -23,6 +23,23 @@ const useUser = () => {
     });
     return response.data;
   };
-  return { createUser, checkUser };
+
+  const getMe = async (): Promise<checkUserResponse> => {
+    const response = await apis.get("/user/get/me");
+    return response.data;
+  };
+
+  const updateMe = async (user: { name?: string }) => {
+    try {
+      const response = await apis.put("/user/update/me", {
+        data: user,
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  return { createUser, checkUser, getMe, updateMe };
 };
 export default useUser;
