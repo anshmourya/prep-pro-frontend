@@ -3,20 +3,43 @@ import { Card } from "@/components/ui/card";
 import { Facebook, Plus, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useUser from "@/apis/user";
-import { useQuery } from "@tanstack/react-query";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { calculateStreak } from "@/lib/utils";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import EditProfile from "@/components/modal/EditProfile";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const [isCopied, setIsCopied] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { getMe } = useUser();
-  const { user: kindeUser } = useKindeAuth();
+  const { getMe, updateMe } = useUser();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data } = useQuery({
     queryKey: ["user", "me"],
     queryFn: () => getMe(),
+  });
+
+  const { mutate: updateMeHandler } = useMutation({
+    mutationFn: updateMe,
+    onSuccess: () => {
+      toast.dismiss();
+      toast.success("Profile updated successfully");
+      setIsModalOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["user", "me"] });
+    },
+    onMutate: () => {
+      toast.loading("Updating profile...");
+    },
+    onError: (error: any) => {
+      toast.dismiss();
+      const message =
+        error?.response?.data?.message ?? "Failed to update profile";
+      toast.error(message);
+    },
   });
   const user = data?.data?.user;
 
@@ -24,6 +47,17 @@ const Profile = () => {
     navigator.clipboard.writeText(window.location.origin);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  const userInitials = (name: string) => {
+    const nameArray = name.split(" ");
+    let initials = "";
+    if (nameArray.length > 1) {
+      initials = nameArray[0][0] + nameArray[1][0];
+    } else {
+      initials = nameArray[0][0] + nameArray[0][1];
+    }
+    return initials;
   };
 
   return (
@@ -34,9 +68,9 @@ const Profile = () => {
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center gap-4">
               <Avatar className="w-20 h-20">
-                <AvatarImage src={kindeUser?.picture ?? ""} />
-                <AvatarFallback className="font-medium text-gray-600 capitalize dark:text-gray-400">
-                  {user?.name[0]}
+                <AvatarImage src="" />
+                <AvatarFallback className="font-medium text-gray-600 uppercase dark:text-gray-400">
+                  {userInitials(user?.name ?? "")}
                 </AvatarFallback>
               </Avatar>
               <div>
@@ -47,17 +81,27 @@ const Profile = () => {
                 </p>
               </div>
             </div>
-            <Button variant="outline">Edit profile</Button>
+            <Button variant="outline" onClick={() => setIsModalOpen(true)}>
+              Edit profile
+            </Button>
           </div>
 
           {/* Bio Section */}
           <div className="mb-6">
-            <Button
-              variant="outline"
-              className="justify-start w-full text-gray-600 dark:text-gray-400"
-            >
-              + Add bio
-            </Button>
+            {user?.bio ? (
+              <p
+                className="text-gray-600 dark:text-gray-400"
+                dangerouslySetInnerHTML={{ __html: user?.bio }}
+              />
+            ) : (
+              <Button
+                variant="outline"
+                className="justify-start w-full text-gray-600 dark:text-gray-400"
+                onClick={() => setIsModalOpen(true)}
+              >
+                + Add bio
+              </Button>
+            )}
           </div>
 
           {/* Reading Streak */}
@@ -87,7 +131,12 @@ const Profile = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Your top tags</h2>
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => navigate("/tags")}
+              >
                 <Plus className="w-4 h-4" />
                 Add tag
               </Button>
@@ -141,6 +190,18 @@ const Profile = () => {
           </div>
         </Card>
       </div>
+      <EditProfile
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialData={{
+          name: user?.name ?? "",
+          bio: user?.bio ?? "",
+        }}
+        onSave={(data) => {
+          updateMeHandler(data);
+          setIsModalOpen(false);
+        }}
+      />
     </div>
   );
 };

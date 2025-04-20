@@ -10,6 +10,7 @@ import useUser from "./apis/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Tags from "./pages/tags";
 import Profile from "./pages/profile";
+import { Toaster } from "react-hot-toast";
 const App = () => {
   const cookies = new Cookies();
   const { checkUser, createUser } = useUser();
@@ -83,6 +84,7 @@ const App = () => {
         </Route>
         <Route path="/tags" element={<Tags />} />
       </Routes>
+      <Toaster />
     </Router>
   );
 };

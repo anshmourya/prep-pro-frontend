@@ -31,7 +31,7 @@ const useUser = () => {
 
   const updateMe = async (user: { name?: string }) => {
     try {
-      const response = await apis.put("/user/update/me", {
+      const response = await apis.patch("/user/update/me", {
         data: user,
       });
       return response.data;

@@ -10,6 +10,7 @@ export interface UserSchema {
     name: string;
     id: string;
   }[];
+  bio: string;
 }
 
 export interface checkUserResponse {
