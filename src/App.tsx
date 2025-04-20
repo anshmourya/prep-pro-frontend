@@ -53,7 +53,6 @@ const App = () => {
     const handleUserAuth = async () => {
       if (isAuthenticated && user) {
         const userExists = await refetchUser();
-        console.log(user);
         if (
           !userExists.data?.found &&
           user.email &&

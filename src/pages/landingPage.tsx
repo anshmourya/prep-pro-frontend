@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
-import { Navigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
   const { login, isAuthenticated, user } = useKindeAuth();
+  const navigate = useNavigate();
 
-  if (isAuthenticated && user) {
-    return <Navigate to="/feed" />;
-  }
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      navigate("/feed");
+    }
+  }, [isAuthenticated, user, navigate]);
   return (
     <div className="min-h-screen bg-[#0D1117] flex flex-col items-center justify-center relative overflow-hidden">
       {/* Purple glow effect */}
