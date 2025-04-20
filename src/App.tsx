@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import useUser from "./apis/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Tags from "./pages/tags";
+import Profile from "./pages/profile";
 const App = () => {
   const cookies = new Cookies();
   const { checkUser, createUser } = useUser();
@@ -70,7 +71,6 @@ const App = () => {
     handleUserAuth();
   }, [isAuthenticated, user]);
 
-  
   return (
     <Router>
       <Routes>
@@ -78,6 +78,7 @@ const App = () => {
         <Route path="/" element={<PageLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/tags" element={<Tags />} />
       </Routes>
