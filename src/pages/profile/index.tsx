@@ -110,7 +110,7 @@ const Profile = () => {
             <div className="flex gap-8">
               <div>
                 <div className="text-3xl font-bold">
-                  {calculateStreak(user?.totalStreak ?? []).longestStreak}
+                  {calculateStreak([])?.longestStreak ?? 1}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   Longest streak 🏆
